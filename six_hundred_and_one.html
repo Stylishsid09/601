@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Six Hundred and One — a serialized psychological thriller by Sid.">
+<meta name="theme-color" content="#090909">
+<title>Six Hundred and One — A Serial by Sid</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --bg: #080808;
+  --fg: #f4f2f0;
+  --muted: #929094;
+  --line: #2b2022;
+  --accent: #e32636;
+  --panel: #100d0e;
+  --red-dim: #761722;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--bg); color: var(--fg);
+  font-family: "Inter", system-ui, sans-serif; min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+button { font: inherit; }
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 10;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 22px 30px; font-size: 10px; letter-spacing: .18em;
+  text-transform: uppercase; background: linear-gradient(var(--bg) 25%, rgba(8,8,8,.88), transparent);
+  backdrop-filter: blur(5px);
+}
+.brand { color: var(--fg); }
+.nav-links { display: flex; gap: 24px; color: var(--muted); }
+.nav-links a:hover, .nav-links a:focus-visible { color: var(--fg); }
+.hero {
+  min-height: 100svh; display: grid; place-items: center; text-align: center;
+  padding: 100px 24px 70px; position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ""; position: absolute; inset: 12% 8% 8%;
+  background:
+    linear-gradient(90deg, transparent 49.8%, rgba(227,38,54,.18) 50%, transparent 50.2%),
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 100% 100%, 72px 72px, 72px 72px;
+  border: 1px solid rgba(255,255,255,.07);
+  mask-image: radial-gradient(ellipse at center, black 18%, transparent 72%);
+  pointer-events: none;
+}
+.hero-inner { max-width: 850px; position: relative; z-index: 1; }
+.hero-art {
+  position: absolute; inset: 0; pointer-events: none; opacity: .8; overflow: hidden;
+}
+.hero-art .red-line {
+  position: absolute; left: 50%; top: 0; height: 100%; width: 1px;
+  background: linear-gradient(transparent, rgba(227,38,54,.9) 30%, rgba(227,38,54,.18) 70%, transparent);
+}
+.hero-art .orbit {
+  position: absolute; left: 50%; top: 48%; width: min(58vw, 540px); aspect-ratio: 1;
+  transform: translate(-50%,-50%) rotate(-18deg); border: 1px solid rgba(255,255,255,.12);
+  border-radius: 50%;
+}
+.hero-art .orbit::before, .hero-art .orbit::after {
+  content: ""; position: absolute; inset: 12%; border: 1px solid rgba(227,38,54,.25); border-radius: 50%;
+}
+.hero-art .orbit::after { inset: 28%; border-color: rgba(255,255,255,.12); }
+.hero-stamp {
+  position: absolute; right: max(24px, calc((100vw - 1100px)/2)); bottom: 46px;
+  color: rgba(255,255,255,.35); font-size: 9px; letter-spacing: .2em; writing-mode: vertical-rl;
+  text-transform: uppercase;
+}
+.kicker, .section-label, .episode-meta {
+  color: var(--muted); font-size: 10px; letter-spacing: .28em; text-transform: uppercase;
+}
+.kicker { margin-bottom: 30px; }
+.kicker::before { content: "✳"; color: var(--accent); margin-right: 10px; font-size: 12px; }
+h1, h2, .episode-title, .episode-name {
+  font-family: "Cormorant Garamond", Georgia, serif; font-weight: 400;
+}
+h1 {
+  font-size: clamp(64px, 12vw, 142px); line-height: .78;
+  letter-spacing: -.055em; margin: 0;
+}
+h1 span { color: var(--accent); }
+.hero-sub {
+  margin-top: 38px; color: var(--muted);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(19px, 2.5vw, 24px); line-height: 1.5;
+}
+.hero-note {
+  margin-top: 16px; color: #696761; font-size: 10px;
+  letter-spacing: .13em; text-transform: uppercase;
+}
+.enter {
+  display: inline-block; margin-top: 44px; color: var(--accent);
+  font-size: 10px; letter-spacing: .18em; text-transform: uppercase;
+  border-bottom: 1px solid var(--accent); padding-bottom: 8px;
+}
+.enter:hover { opacity: .72; }
+.section { max-width: 1050px; margin: 0 auto; padding: 120px 30px; }
+.section-label { margin-bottom: 38px; }
+.section-label::before { content: "✳"; color: var(--accent); margin-right: 10px; }
+.intro {
+  max-width: 690px; margin: 0 0 68px;
+  color: #c9c5bc; font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(24px, 3.2vw, 35px); line-height: 1.45;
+}
+.intro em { color: var(--accent); font-style: normal; }
+.intro::before { content: "//"; display: block; color: var(--accent); font: 600 12px Inter, sans-serif; letter-spacing: .2em; margin-bottom: 18px; }
+.collection-heading {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
+  border-bottom: 1px solid var(--line); padding-bottom: 18px;
+}
+.collection-heading h2 { margin: 0; font-size: 36px; }
+.collection-heading span { color: var(--muted); font-size: 10px; letter-spacing: .15em; text-transform: uppercase; }
+.episode-list { border-top: 1px solid var(--line); margin-top: 20px; position: relative; }
+.episode-list::before { content: ""; position: absolute; top: -1px; left: 0; width: 72px; height: 1px; background: var(--accent); }
+.episode-item {
+  display: grid; grid-template-columns: 64px minmax(0,1fr) 100px 24px;
+  gap: 18px; align-items: center; padding: 25px 0;
+  border-bottom: 1px solid var(--line); transition: padding .25s ease, opacity .25s ease;
+}
+.episode-item.available:hover { padding-left: 10px; padding-right: 10px; }
+.episode-item.locked { opacity: .58; }
+.episode-number { color: var(--accent); font-size: 10px; letter-spacing: .1em; }
+.episode-name { font-size: clamp(25px, 3.4vw, 38px); line-height: 1.05; }
+.episode-subtitle { display: block; margin-top: 8px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+.episode-status { color: var(--muted); text-align: right; font-size: 9px; letter-spacing: .12em; text-transform: uppercase; }
+.episode-item.available .episode-status { color: var(--accent); }
+.episode-item.available .episode-arrow { color: var(--accent); }
+.episode-item.available::selection { background: var(--accent); color: white; }
+.episode-arrow { text-align: right; color: var(--muted); }
+.reading {
+  display: none; max-width: 850px; margin: 0 auto; padding: 145px 30px 110px;
+}
+.reading.active { display: block; }
+.back-link {
+  display: inline-block; margin-bottom: 48px; color: var(--muted);
+  font-size: 10px; letter-spacing: .14em; text-transform: uppercase;
+}
+.back-link:hover { color: var(--fg); }
+.reading .episode-meta { margin-bottom: 18px; color: var(--accent); }
+.reading .episode-meta::before { content: "■"; font-size: 8px; margin-right: 10px; }
+.reading h2 {
+  font-size: clamp(50px, 8vw, 88px); line-height: .9;
+  letter-spacing: -.035em; margin: 0 0 24px;
+}
+.reading-deck {
+  border-left: 2px solid var(--accent); padding-left: 18px;
+  color: var(--muted); font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 23px; line-height: 1.45; max-width: 620px; margin-bottom: 65px;
+}
+.episode-body {
+  max-width: 650px; white-space: pre-wrap;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(21px, 2.2vw, 27px); line-height: 1.72; letter-spacing: .005em;
+}
+.episode-body p { margin: 0 0 1.25em; }
+.episode-body .editor-note {
+  color: var(--muted); font-family: "Inter", sans-serif; font-size: 12px;
+  line-height: 1.7; border-left: 1px solid var(--line); padding: 12px 0 12px 18px;
+}
+.reading-nav {
+  display: flex; justify-content: space-between; gap: 16px; margin-top: 95px;
+  padding-top: 24px; border-top: 1px solid var(--line);
+  color: var(--muted); font-size: 10px; letter-spacing: .12em; text-transform: uppercase;
+}
+.reading-nav a:hover { color: var(--fg); }
+.about { max-width: 680px; }
+.about p {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 27px; line-height: 1.5; color: var(--fg);
+}
+.about p + p { color: var(--muted); }
+.about p:first-child::first-letter { color: var(--accent); }
+.footer {
+  padding: 55px 24px 35px; color: var(--muted); font-size: 9px;
+  letter-spacing: .16em; text-transform: uppercase; text-align: center;
+  border-top: 1px solid #271719;
+}
+.footer .small { display: block; margin-top: 12px; letter-spacing: .08em; text-transform: none; }
+@media (max-width: 650px) {
+  nav { padding: 18px; } .nav-links { gap: 14px; }
+  .section { padding: 90px 20px; }
+  .episode-item { grid-template-columns: 32px minmax(0,1fr) 20px; gap: 10px; padding: 22px 0; }
+  .episode-status { display: none; }
+  .reading { padding: 120px 20px 75px; }
+  .reading-deck { margin-bottom: 45px; }
+  .episode-body { font-size: 22px; }
+  .reading-nav { font-size: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}
+</style>
+</head>
+<body>
+<nav>
+  <a class="brand" href="#home" aria-label="Six Hundred and One home">601</a>
+  <div class="nav-links">
+    <a href="#episodes">Episodes</a>
+    <a href="#about">About</a>
+  </div>
+</nav>
+
+<main>
+  <section id="home" class="hero">
+    <div class="hero-art" aria-hidden="true"><span class="red-line"></span><span class="orbit"></span></div>
+    <div class="hero-stamp" aria-hidden="true">FILE 601 · CLASSIFIED</div>
+    <div class="hero-inner">
+      <div class="kicker">A serialized psychological thriller</div>
+      <h1>Six Hundred<br><span>and One</span></h1>
+      <div class="hero-sub">Six hundred people.<br>One room. No innocent choices.</div>
+      <div class="hero-note">A continuing story by Sid · New episodes twice a week</div>
+      <a class="enter" href="#episodes">Begin reading &nbsp; →</a>
+    </div>
+  </section>
+
+  <section id="episodes" class="section">
+    <div class="section-label">The serial · Season one</div>
+    <p class="intro">
+      Six hundred people wake in a room that should not exist.
+      Otto is forced to make choices no one should have to make.
+      But the room has rules, and someone has already decided how this story ends.
+      <em>The question is whether Otto is a prisoner—or the architect.</em>
+    </p>
+    <div class="collection-heading">
+      <h2>Episodes</h2>
+      <span id="episodeCount">01 / 15</span>
+    </div>
+    <div class="episode-list" id="episodeList"></div>
+  </section>
+
+  <section id="reader" class="reading" aria-live="polite">
+    <a class="back-link" href="#episodes">← All episodes</a>
+    <div class="episode-meta" id="readingNumber"></div>
+    <h2 id="readingTitle"></h2>
+    <div class="reading-deck" id="readingDeck"></div>
+    <article id="readingBody" class="episode-body"></article>
+    <div class="reading-nav">
+      <a id="prevEpisode" href="#episodes">← Previous</a>
+      <a href="#episodes">Episode index</a>
+      <a id="nextEpisode" href="#episodes">Next →</a>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <div class="section-label">About the story</div>
+    <div class="about">
+      <p><em>Six Hundred and One</em> is a serialized psychological thriller about control, guilt, memory, and the stories people tell themselves to survive.</p>
+      <p>Episodes are intended to be around 500–600 words and published twice a week. The truth behind the room will unfold gradually.</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    Six Hundred and One · written by Sid
+    <span class="small">A work of fiction. The story is still unfolding.</span>
+  </footer>
+</main>
+
+<script>
+/*
+  HOW TO ADD AN EPISODE
+  1. Add a new object to the episodes array below.
+  2. Give it a title, a short deck, and the complete episode text.
+  3. Change status to "available".
+  4. The episode index and previous/next navigation update automatically.
+
+  Keep episode text inside backticks. If your prose contains a backtick (`),
+  write it as \\` so it does not end the string early.
+*/
+
+const episodes = [
+  {
+    title: "Six Years Later",
+    deck: "Otto has learned to live with silence. Then the silence changes.",
+    status: "available",
+    text: `<!-- PASTE THE FINAL TEXT OF EPISODE 1 HERE -->`
+  },
+  {
+    title: "The White Room",
+    deck: "Six hundred strangers wake beneath a light that never changes.",
+    status: "coming",
+    text: ""
+  },
+  {
+    title: "The Rules",
+    deck: "The room offers its first explanation. Nobody trusts it.",
+    status: "coming",
+    text: ""
+  },
+  {
+    title: "The First Choice",
+    deck: "Otto discovers what the room expects him to become.",
+    status: "coming",
+    text: ""
+  },
+  {
+    title: "Old Friends",
+    deck: "A familiar face makes the room feel even less real.",
+    status: "coming",
+    text: ""
+  },
+  {
+    title: "The Witness",
+    deck: "Someone remembers a detail that should be impossible.",
+    status: "coming",
+    text: ""
+  },
+  {
+    title: "What Amaris Knows",
+    deck: "The past begins to surface in the worst possible place.",
+    status: "coming",
+    text: ""
+  },
+  {
+    title: "A Room Without Corners",
+    deck: "The prisoners begin to suspect that the walls are not the only trap.",
+    status: "coming",
+    text: ""
+  },
+  {
+    title: "The Cost of Mercy",
+    deck: "A good intention can still become someone else's sentence.",
+    status: "coming",
+    text: ""
+  },
+  {
+    title: "Hayden",
+    deck: "Loyalty becomes complicated when survival demands a choice.",
+    status: "coming",
+    text: ""
+  },
+  {
+    title: "Anatoly",
+    deck: "A name appears where no name should be.",
+    status: "coming",
+    text: ""
+  },
+  {
+    title: "The Shape of a Lie",
+    deck: "Every answer makes the larger question harder to ignore.",
+    status: "coming",
+    text: ""
+  },
+  {
+    title: "The Man Behind It",
+    deck: "The truth is closer to Otto than he can bear to believe.",
+    status: "coming",
+    text: ""
+  },
+  {
+    title: "Six Hundred",
+    deck: "The room's purpose finally begins to come into focus.",
+    status: "coming",
+    text: ""
+  },
+  {
+    title: "One",
+    deck: "The last choice was made long before anyone entered the room.",
+    status: "coming",
+    text: ""
+  }
+];
+
+const list = document.getElementById("episodeList");
+const reader = document.getElementById("reader");
+const titleEl = document.getElementById("readingTitle");
+const deckEl = document.getElementById("readingDeck");
+const bodyEl = document.getElementById("readingBody");
+const numberEl = document.getElementById("readingNumber");
+const prev = document.getElementById("prevEpisode");
+const next = document.getElementById("nextEpisode");
+
+document.getElementById("episodeCount").textContent =
+  `01 / ${String(episodes.length).padStart(2, "0")}`;
+
+episodes.forEach((episode, i) => {
+  const available = episode.status === "available" && episode.text.trim().length > 0 &&
+    !episode.text.includes("PASTE THE FINAL TEXT");
+  const a = document.createElement("a");
+  a.className = `episode-item ${available ? "available" : "locked"}`;
+  a.href = available ? `#episode-${i + 1}` : "#episodes";
+  if (!available) {
+    a.setAttribute("aria-disabled", "true");
+    a.addEventListener("click", event => event.preventDefault());
+  }
+  const status = available ? "Read episode" : "Coming soon";
+  a.innerHTML = `
+    <span class="episode-number">${String(i + 1).padStart(2, "0")}</span>
+    <span class="episode-name">${escapeHTML(episode.title)}
+      <span class="episode-subtitle">${escapeHTML(episode.deck)}</span>
+    </span>
+    <span class="episode-status">${status}</span>
+    <span class="episode-arrow">${available ? "↗" : "—"}</span>
+  `;
+  list.appendChild(a);
+});
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, char => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  })[char]);
+}
+
+function episodeIsReady(episode) {
+  return episode && episode.status === "available" &&
+    episode.text.trim().length > 0 &&
+    !episode.text.includes("PASTE THE FINAL TEXT");
+}
+
+function showEpisode(i) {
+  if (i < 0 || i >= episodes.length || !episodeIsReady(episodes[i])) {
+    location.hash = "episodes";
+    return;
+  }
+  const episode = episodes[i];
+  numberEl.textContent = `EPISODE ${String(i + 1).padStart(2, "0")} / ${String(episodes.length).padStart(2, "0")}`;
+  titleEl.textContent = episode.title;
+  deckEl.textContent = episode.deck;
+  bodyEl.className = "episode-body";
+  bodyEl.textContent = episode.text;
+
+  prev.textContent = i === 0 ? "← Episode index" : "← Previous";
+  prev.href = i === 0 ? "#episodes" : `#episode-${i}`;
+  const nextReady = i < episodes.length - 1 && episodeIsReady(episodes[i + 1]);
+  next.textContent = i === episodes.length - 1 ? "Episode index →" : "Next →";
+  next.href = nextReady ? `#episode-${i + 2}` : "#episodes";
+
+  reader.classList.add("active");
+  reader.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function route() {
+  const match = location.hash.match(/^#episode-(\d+)$/);
+  if (match) {
+    showEpisode(Number(match[1]) - 1);
+  } else {
+    reader.classList.remove("active");
+  }
+}
+window.addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>
